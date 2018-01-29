@@ -1,0 +1,53 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'hillel-ee'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+bootRun{
+    systemProperty 'spring.profiles.active', 'prod'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+
+    compileOnly('org.projectlombok:lombok')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    runtime('org.postgresql:postgresql')
+
+    compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
+
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+
+    compile 'org.hibernate:hibernate-java8'
+
+    compile 'org.springframework.retry:spring-retry'
+
+    runtime('h2.database:h2')
+}
