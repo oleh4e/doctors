@@ -6,6 +6,7 @@ import com.doctors.doctor.JpaDoctorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,6 +17,7 @@ import java.util.Set;
 public class DoctorsDBConfig {
 
     @Bean
+    //@Profile("mysql")
     CommandLineRunner initDoctorDb(JpaDoctorRepository repository) {
         return args -> {
             if (!repository.findAll().isEmpty()) {

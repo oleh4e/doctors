@@ -5,6 +5,7 @@ doctor-config:
       - 'Psychologist'
 
 spring:
+    profiles: postgre
     datasource:
         url: jdbc:postgresql:doctors_clinic
         username: postgres
@@ -21,5 +22,23 @@ spring:
         hibernate:
           ddl-auto: create
         open-in-view: false
+---
 
+spring:
+  #profiles: mysql
+  datasource:
+      url: jdbc:mysql://localhost/doctors
+      driverClassName: com.mysql.jdbc.Driver
+      username: root
+      password: root
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+      indent-output: true
+  jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      hibernate:
+        ddl-auto: update
+      open-in-view: false
 

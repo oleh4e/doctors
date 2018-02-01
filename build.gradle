@@ -43,11 +43,13 @@ dependencies {
 
     compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
 
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+
+    compile 'mysql:mysql-connector-java'
 
     compile 'org.hibernate:hibernate-java8'
 
     compile 'org.springframework.retry:spring-retry'
 
-    runtime('h2.database:h2')
+    //runtime('h2.database:h2')
 }
