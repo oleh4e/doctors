@@ -5,7 +5,7 @@ doctor-config:
       - 'Psychologist'
 
 spring:
-    profiles: postgre
+    #profiles: postgre
     datasource:
         url: jdbc:postgresql:doctors_clinic
         username: postgres
@@ -25,7 +25,7 @@ spring:
 ---
 
 spring:
-  #profiles: mysql
+  profiles: mysql
   datasource:
       url: jdbc:mysql://localhost/doctors
       driverClassName: com.mysql.jdbc.Driver

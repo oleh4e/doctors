@@ -1,5 +1,6 @@
 package com.doctors.doctor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Version
+    @JsonIgnore
     private Integer version;
     private String name;
     @ElementCollection(fetch = FetchType.EAGER)

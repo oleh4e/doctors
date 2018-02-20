@@ -1,6 +1,8 @@
 package com.doctors.doctor;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.doctors.util.EngagedAppointmentException;
 import com.doctors.util.InvalidDateException;
@@ -20,19 +22,20 @@ public class DoctorService {
 
     private final JpaDoctorRepository doctorRepository;
 
-    public List<Doctor> getDoctors(Optional<List<String>> specializations,
-                                   Optional<String> name) {
+    public Page<Doctor> getDoctors(Optional<List<String>> specializations,
+                                   Optional<String> name,
+                                   Pageable pageable) {
         if (specializations.isPresent() && name.isPresent()) {
-            return doctorRepository.findBySpecializationsInAndName(specializations.get(), name.get());
+            return doctorRepository.findBySpecializationsInAndName(specializations.get(), name.get(), pageable);
         }
         if (specializations.isPresent()) {
             return doctorRepository.findBySpecializationsIgnoreCaseIn(specializations
-                    .get());
+                    .get(), pageable);
         }
         if (name.isPresent()) {
-            return doctorRepository.findByNameIgnoreCase(name.get());
+            return doctorRepository.findByNameIgnoreCase(name.get(), pageable);
         }
-        return doctorRepository.findAll();
+        return doctorRepository.findAll(pageable);
     }
 
     public Optional<Doctor> getById(Integer id) {

@@ -4,6 +4,8 @@ package com.doctors.doctor;
 import com.doctors.doctor.dto.PetIdInputDto;
 import com.doctors.util.DoctorConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +38,11 @@ public class DoctorController {
 
 
     @GetMapping("/doctors")
-    public List<Doctor> getDoctors(@RequestParam Optional<String> name,
-                                   @RequestParam Optional<List<String>> specializations) {
+    public Page<Doctor> getDoctors(@RequestParam Optional<String> name,
+                                   @RequestParam Optional<List<String>> specializations,
+                                   Pageable pageable) {
 
-        List<Doctor> doctors = doctorService.getDoctors(specializations, name);
-        return doctors;
+        return doctorService.getDoctors(specializations, name, pageable);
     }
 
     @PostMapping("/doctors")
