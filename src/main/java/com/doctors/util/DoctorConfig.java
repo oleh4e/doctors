@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "com.doctors.doctor-config")
+@ConfigurationProperties(prefix = "doctor-config")
 public class DoctorConfig {
     private List<String> specializations = new ArrayList<>();
 }

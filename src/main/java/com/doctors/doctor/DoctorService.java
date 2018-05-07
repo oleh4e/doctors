@@ -75,11 +75,11 @@ public class DoctorService {
     }
 
     @Transactional
-    public Doctor createAnAppointment(Integer id, LocalDate date, LocalTime time, Integer petId) {
-        if (!doctorRepository.findById(id).isPresent()) {
+    public Doctor createAnAppointment(Integer doctorId, LocalDate date, LocalTime time, Integer petId) {
+        if (!doctorRepository.findById(doctorId).isPresent()) {
             throw new NoSuchDoctorException();
         }
-        Doctor doctor = doctorRepository.findById(id).get();
+        Doctor doctor = doctorRepository.findById(doctorId).get();
         Appointment appointment = new Appointment(date, time, petId);
         if (appointment.getComingDate().isBefore(LocalDate.now()) ||
                 appointment.getTime().isBefore(LocalTime.of(8, 0)) ||

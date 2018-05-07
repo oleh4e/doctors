@@ -55,11 +55,11 @@ public class DoctorController {
     }
 
     @PostMapping("/doctors/{id}/schedule/{date}/{time}")
-    public ResponseEntity<Void> createAnAppointment(@PathVariable Integer id,
+    public ResponseEntity<Void> createAnAppointment(@PathVariable Integer doctorId,
                                                     @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                     @PathVariable String time,
                                                     @RequestBody PetIdInputDto petId) {
-        Doctor saved = doctorService.createAnAppointment(id, date,
+        Doctor saved = doctorService.createAnAppointment(doctorId, date,
                 LocalTime.parse(time), petId.getPetId());
         return ResponseEntity.created(
                 URI.create("/doctors/" + saved.getId())).build();
