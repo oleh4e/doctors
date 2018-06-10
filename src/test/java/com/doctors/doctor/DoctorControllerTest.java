@@ -3,6 +3,7 @@ package com.doctors.doctor;
 
 import com.google.common.io.Resources;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,13 @@ public class DoctorControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Before
+    public void cleanupBefore() {
+        doctorRepository.deleteAll();
+    }
 
     @After
-    public void cleanup() {
+    public void cleanupAfter() {
         doctorRepository.deleteAll();
     }
 
@@ -104,7 +109,7 @@ public class DoctorControllerTest {
     }
 
     @Test
-    public void updatePet() throws Exception {
+    public void updateDoctor() throws Exception {
         Integer id = doctorRepository.save(new Doctor("Andrew", null, null)).getId();
 
         String file = "doctor.json";
@@ -121,7 +126,7 @@ public class DoctorControllerTest {
     }
 
     @Test
-    public void deletePet() throws Exception {
+    public void deleteDoctor() throws Exception {
         Integer id = doctorRepository.save(new Doctor("Andrew", null, null)).getId();
 
         mockMvc.perform(delete("/doctors/{id}", id)
