@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -133,10 +134,30 @@ public class DoctorControllerTest {
                 .header(HttpHeaders.AUTHORIZATION, "Basic T2xlZzpwYXNz"))
                 .andExpect(status().isNoContent());
 
-        Optional<Doctor> maybePet = doctorRepository.findById(id);
+        Optional<Doctor> maybeDoctor = doctorRepository.findById(id);
 
-        assertFalse(maybePet.isPresent());
+        assertFalse(maybeDoctor.isPresent());
 
+    }
+
+    @Test
+    public void createAppointment() throws Exception {
+        String file = "appointment.json";
+        String body = readFile(file);
+
+        Integer doctorId = doctorRepository.save(new Doctor("Andrew", null, null)).getId();
+        String date="2018-07-07";
+        String time="10:00";
+
+        mockMvc.perform(post("/doctors/{id}/schedule/{date}/{time}",doctorId,date,time)
+                .header(HttpHeaders.AUTHORIZATION, "Basic T2xlZzpwYXNz")
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", containsString("/doctors/"+doctorId+"/2018-07-07")));
+
+        Set<Appointment> all = doctorRepository.findById(doctorId).get().getAppointments();
+        assertThat(all, hasSize(1));
     }
 
 
