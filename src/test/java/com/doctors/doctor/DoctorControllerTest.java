@@ -146,15 +146,15 @@ public class DoctorControllerTest {
         String body = readFile(file);
 
         Integer doctorId = doctorRepository.save(new Doctor("Andrew", null, null)).getId();
-        String date="2018-07-07";
-        String time="10:00";
+        String date = "2018-07-07";
+        String time = "10:00";
 
-        mockMvc.perform(post("/doctors/{id}/schedule/{date}/{time}",doctorId,date,time)
+        mockMvc.perform(post("/doctors/{id}/schedule/{date}/{time}", doctorId, date, time)
                 .header(HttpHeaders.AUTHORIZATION, "Basic T2xlZzpwYXNz")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", containsString("/doctors/"+doctorId+"/2018-07-07")));
+                .andExpect(header().string("Location", containsString("/doctors/" + doctorId + "/2018-07-07")));
 
         Set<Appointment> all = doctorRepository.findById(doctorId).get().getAppointments();
         assertThat(all, hasSize(1));

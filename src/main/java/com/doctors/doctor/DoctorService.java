@@ -1,5 +1,6 @@
 package com.doctors.doctor;
 
+import com.doctors.doctor.dto.PetIdInputDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -97,4 +98,12 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
+    public Optional<Doctor> deleteAppointment(Integer id, LocalDate date, LocalTime time, Integer petId) {
+        Optional<Doctor> maybeDoctor = doctorRepository.findById(id);
+        Appointment temp = new Appointment(date, time, petId);
+
+        maybeDoctor.ifPresent(doctor -> doctor.getAppointments().remove(temp));
+
+        return maybeDoctor;
+    }
 }

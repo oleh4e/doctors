@@ -3,6 +3,7 @@ package com.doctors.doctor;
 
 import com.doctors.doctor.dto.PetIdInputDto;
 import com.doctors.util.DoctorConfig;
+import com.doctors.util.NoSuchAppointmentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -87,6 +88,15 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteADoctor(@PathVariable Integer id) {
         doctorService.delete(id).orElseThrow(NoSuchDoctorException::new);
+    }
+
+    @DeleteMapping("/doctors/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAppointment(@PathVariable Integer id,
+                                  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                  @PathVariable String time,
+                                  @RequestBody PetIdInputDto petId) {
+        doctorService.deleteAppointment(id, date, LocalTime.parse(time), petId).orElseThrow(NoSuchAppointmentException::new);
     }
 
     @GetMapping("/doctors/specializations")
